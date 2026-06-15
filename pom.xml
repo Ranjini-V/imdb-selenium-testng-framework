@@ -12,6 +12,7 @@
 
     <properties>
         <!-- Core -->
+        <java.version>24</java.version>
         <selenium.version>4.18.1</selenium.version>
         <webdrivermanager.version>5.7.0</webdrivermanager.version>
         <testng.version>7.9.0</testng.version>
@@ -26,7 +27,6 @@
         <apache.poi.version>5.2.5</apache.poi.version>
         <jackson.version>2.16.1</jackson.version>
         <log4j.version>2.22.1</log4j.version>
-        <lombok.version>1.18.30</lombok.version>
         <faker.version>1.0.2</faker.version>
 
         <!-- Plugin versions -->
@@ -36,7 +36,7 @@
         <!-- Runtime defaults — override via -D flags or CI env vars -->
         <browser>chrome</browser>
         <env>qa</env>
-        <suite>regression</suite>
+        <!--<suite>regression</suite> -->
         <headless>false</headless>
         <thread.count>2</thread.count>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -117,22 +117,11 @@
 
         <!-- ====== LOGGING ====== -->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>${faker.version}</version>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -143,24 +132,21 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.version}</version>
                 <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>src/test/resources/suites/${suite}.xml</suiteXmlFile>
-                    </suiteXmlFiles>
+<!--                    <suiteXmlFiles>-->
+<!--                        <suiteXmlFile>src/test/resources/suites/${suite}.xml</suiteXmlFile>-->
+<!--                    </suiteXmlFiles>-->
                     <systemPropertyVariables>
                         <browser>${browser}</browser>
                         <env>${env}</env>
                         <headless>${headless}</headless>
                         <thread.count>${thread.count}</thread.count>
                     </systemPropertyVariables>
-                    <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/1.9.21/aspectjweaver-1.9.21.jar"
-                    </argLine>
-                    <properties>
-                        <property>
-                            <name>listener</name>
-                            <value>com.imdb.listeners.TestNGListener</value>
-                        </property>
-                    </properties>
+<!--                    <properties>-->
+<!--                         <property>-->
+<!--                          <name>listener</name>-->
+<!--                            <value>com.imdb.listeners.TestNGListener</value>-->
+<!--                        </property> -->
+<!--                    </properties>-->
                 </configuration>
                 <dependencies>
                 </dependencies>
@@ -184,13 +170,6 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
